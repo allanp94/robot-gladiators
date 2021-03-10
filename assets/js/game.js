@@ -5,11 +5,11 @@ var playerMoney = 10;
 
 console.log(playerName, playerHealth, playerAttack);
 
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-var fight = function () {
+var fight = function (enemyName) {
   window.alert("Welcome to Robot Gladiators");
 
   var promptFight = window.prompt(
@@ -74,4 +74,6 @@ var fight = function () {
   // Log a resulting message to the console so we know that it worked.
 };
 
-fight();
+for (var i = 0; i < enemyNames.length; i++) {
+  fight(enemyNames[i]);
+}
