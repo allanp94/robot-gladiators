@@ -1,7 +1,5 @@
-const { func } = require("prop-types");
-
 var playerInfo = {
-  name: window.prompt("what is your robot's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
@@ -39,6 +37,17 @@ var enemyInfo = [
 ];
 
 var enemyHealth;
+
+function getPlayerName() {
+  var name = "";
+
+  while (name === "" || name === null) {
+    name = prompt("What is your robots name?");
+  }
+
+  console.log("Your players name is " + name);
+  return name;
+}
 
 function randomNumber(min, max) {
   var value = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -123,6 +132,7 @@ var startGame = function () {
   for (var i = 0; i < enemyInfo.length; i++) {
     if (playerInfo.health > 0) {
       window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+      debugger;
 
       var pickedEnemyObj = enemyInfo[i];
       pickedEnemyObj.health = randomNumber(40, 60);
