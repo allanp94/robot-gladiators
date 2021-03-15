@@ -192,13 +192,36 @@ var startGame = function () {
 };
 
 var endGame = function () {
+  var highscore = localStorage.getItem("highscore");
+
   if (playerInfo.health > 0) {
     window.alert(
       "Great job, you've survived the game! You now have a score of " +
         playerInfo.money
     );
   } else {
-    window.alert("The game has now ended. Let's see how you did!");
+    window.alert(
+      "The game has now ended beter luck next time. Your score is " +
+        playerInfo.money
+    );
+  }
+
+  if (highscore === null) {
+    highscore = 0;
+  }
+
+  if (highscore > playerInfo.money) {
+    window.alert(
+      playerInfo.name +
+        " did not beat the games highscore of " +
+        playerInfo.money
+    );
+  } else {
+    window.alert(
+      "Congratulations --- you set a highscore of " + playerInfo.money
+    );
+    localStorage.setItem("highscore", playerInfo.money);
+    localStorage.setItem("name", playerInfo.name);
   }
 
   var playAgainConfirm = window.confirm("Would you like to play again?");
