@@ -54,24 +54,41 @@ function randomNumber(min, max) {
   return value;
 }
 
+var fightOrSkip = function () {
+  var promptFight = window.prompt(
+    "Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose"
+  );
+
+  if (promptFight === "" || promptFight === null) {
+    window.alert("You need to provide a valid answer! Please try again!");
+    return fightOrSkip();
+  }
+
+  promptFight = promptFight.toLowerCase();
+
+  if (promptFight === "skip") {
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    if (confirmSkip) {
+      window.alert(
+        playerInfo.name + " has decided to skip this fight. Goodbye!"
+      );
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
+      return true;
+    }
+  }
+
+  return false;
+};
+
 var fight = function (enemy) {
   while (enemy.health > 0 && playerInfo.health > 0) {
-    var promptFight = window.prompt(
-      "Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose"
-    );
+    // } else if (promptFight === "fight" || promptFight === "FIGHT") {
+    //Subtract the value of `playerInfo.attack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
 
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      if (confirmSkip) {
-        window.alert(
-          playerInfo.name + " has decided to skip this fight. Goodbye!"
-        );
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        break;
-      }
-    } else if (promptFight === "fight" || promptFight === "FIGHT") {
-      //Subtract the value of `playerInfo.attack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
+    if (fightOrSkip()) {
+      break; // if the method returns true then exit the fight
+    } else {
       var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
       enemy.health = Math.max(0, enemy.health - damage);
@@ -132,7 +149,6 @@ var startGame = function () {
   for (var i = 0; i < enemyInfo.length; i++) {
     if (playerInfo.health > 0) {
       window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
-      debugger;
 
       var pickedEnemyObj = enemyInfo[i];
       pickedEnemyObj.health = randomNumber(40, 60);
